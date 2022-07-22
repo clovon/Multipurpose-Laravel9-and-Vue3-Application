@@ -12,7 +12,9 @@
         "vite": "^2.9.11"
     },
     "dependencies": {
+        "@vitejs/plugin-vue": "^2.3.3",
         "admin-lte": "^3.2.0",
-        "vue": "^3.2.37"
+        "vue": "^3.2.37",
+        "vue-router": "^4.1.2"
     }
 }
