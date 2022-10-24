@@ -46,4 +46,11 @@ class UserController extends Controller
 
         return $user;
     }
+
+    public function destory(User $user)
+    {
+        $user->delete();
+
+        return response()->noContent();
+    }
 }
