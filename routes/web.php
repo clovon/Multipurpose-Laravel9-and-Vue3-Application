@@ -25,6 +25,7 @@ Route::get('/', function () {
 
 Route::get('/api/users', [UserController::class, 'index']);
 Route::post('/api/users', [UserController::class, 'store']);
+Route::patch('/api/users/{user}/change-role', [UserController::class, 'changeRole']);
 Route::put('/api/users/{user}', [UserController::class, 'update']);
 Route::delete('/api/users/{user}', [UserController::class, 'destory']);
 
