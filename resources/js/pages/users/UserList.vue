@@ -1,10 +1,11 @@
 <script setup>
 import axios from 'axios';
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive, watch } from 'vue';
 import { Form, Field, useResetForm } from 'vee-validate';
 import * as yup from 'yup';
 import { useToastr } from '../../toastr.js';
 import UserListItem from './UserListItem.vue';
+import { debounce } from 'lodash';
 
 const toastr = useToastr();
 const users = ref([]);
@@ -64,7 +65,7 @@ const editUser = (user) => {
     };
 };
 
-const updateUser = (values, {setErrors}) => {
+const updateUser = (values, { setErrors }) => {
     axios.put('/api/users/' + formValues.value.id, values)
         .then((response) => {
             const index = users.value.findIndex(user => user.id === response.data.id);
@@ -89,6 +90,26 @@ const handleSubmit = (values, actions) => {
 const userDeleted = (userId) => {
     users.value = users.value.filter(user => user.id !== userId);
 };
+
+const searchQuery = ref(null);
+
+const search = () => {
+    axios.get('/api/users/search', {
+        params: {
+            query: searchQuery.value
+        }
+    })
+    .then(response => {
+        users.value = response.data;
+    })
+    .catch(error => {
+        console.log(error);
+    })
+};
+
+watch(searchQuery, debounce(() => {
+    search();
+}, 300));
 
 onMounted(() => {
     getUsers();
@@ -115,9 +136,14 @@ onMounted(() => {
 
     <div class="content">
         <div class="container-fluid">
-            <button @click="addUser" type="button" class="mb-2 btn btn-primary">
-                Add New User
-            </button>
+            <div class="d-flex justify-content-between">
+                <button @click="addUser" type="button" class="mb-2 btn btn-primary">
+                    Add New User
+                </button>
+                <div>
+                    <input type="text" v-model="searchQuery" class="form-control" placeholder="Search..." />
+                </div>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <table class="table table-bordered">
@@ -131,14 +157,14 @@ onMounted(() => {
                                 <th>Options</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <UserListItem v-for="(user, index) in users"
-                                :key="user.id"
-                                :user=user
-                                :index=index
-                                @edit-user="editUser"
-                                @user-deleted="userDeleted"
-                            />
+                        <tbody v-if="users.length > 0">
+                            <UserListItem v-for="(user, index) in users" :key="user.id" :user=user :index=index
+                                @edit-user="editUser" @user-deleted="userDeleted" />
+                        </tbody>
+                        <tbody v-else>
+                            <tr>
+                                <td colspan="6" class="text-center">No results found...</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -159,26 +185,29 @@ onMounted(() => {
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <Form ref="form" @submit="handleSubmit" :validation-schema="editing ? editUserSchema : createUserSchema" v-slot="{ errors }" :initial-values="formValues">
+                <Form ref="form" @submit="handleSubmit" :validation-schema="editing ? editUserSchema : createUserSchema"
+                    v-slot="{ errors }" :initial-values="formValues">
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <Field name="name" type="text" class="form-control" :class="{'is-invalid': errors.name }" id="name"
-                                aria-describedby="nameHelp" placeholder="Enter full name" />
+                            <Field name="name" type="text" class="form-control" :class="{ 'is-invalid': errors.name }"
+                                id="name" aria-describedby="nameHelp" placeholder="Enter full name" />
                             <span class="invalid-feedback">{{ errors.name }}</span>
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <Field name="email" type="email" class="form-control " :class="{'is-invalid': errors.email }" id="email"
-                                aria-describedby="nameHelp" placeholder="Enter full name" />
+                            <Field name="email" type="email" class="form-control "
+                                :class="{ 'is-invalid': errors.email }" id="email" aria-describedby="nameHelp"
+                                placeholder="Enter full name" />
                             <span class="invalid-feedback">{{ errors.email }}</span>
                         </div>
 
                         <div class="form-group">
                             <label for="email">Password</label>
-                            <Field name="password" type="password" class="form-control " :class="{'is-invalid': errors.password }" id="password"
-                                aria-describedby="nameHelp" placeholder="Enter password" />
+                            <Field name="password" type="password" class="form-control "
+                                :class="{ 'is-invalid': errors.password }" id="password" aria-describedby="nameHelp"
+                                placeholder="Enter password" />
                             <span class="invalid-feedback">{{ errors.password }}</span>
                         </div>
                     </div>
