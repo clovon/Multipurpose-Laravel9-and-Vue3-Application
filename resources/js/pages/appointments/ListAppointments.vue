@@ -1,3 +1,18 @@
+<script setup>
+import { onMounted, ref } from 'vue';
+
+const appointments = ref([]);
+const getAppointments = () => {
+    axios('/api/appointments')
+    .then((response) => {
+        appointments.value = response.data;
+    })
+};
+
+onMounted(() => {
+    getAppointments();
+});
+</script>
 <template>
     <div class="content-header">
         <div class="container-fluid">
@@ -58,13 +73,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Mr. Martin Glover MD</td>
-                                        <td>2023-01-27</td>
-                                        <td>05:40 PM</td>
+                                    <tr v-for="(appointment, index) in appointments.data" :key="appointment.id">
+                                        <td>{{  index + 1 }}</td>
+                                        <td>{{ appointment.client.first_name }} {{ appointment.client.last_name }}</td>
+                                        <td>{{ appointment.start_time }}</td>
+                                        <td>{{ appointment.end_time }}</td>
                                         <td>
-                                            <span class="badge badge-success">closed</span>
+                                            <span class="badge" :class="`badge-${appointment.status.color}`">{{ appointment.status.name }}</span>
                                         </td>
                                         <td>
                                             <a href="">
