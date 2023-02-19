@@ -1,7 +1,6 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue';
 
-// const appointmentStatus = {'scheduled': 1, 'confirmed': 2, 'cancelled': 3};
 const selectedStatus = ref();
 const appointmentStatus = ref([]);
 const getAppointmentStatus = () => {
@@ -73,16 +72,6 @@ onMounted(() => {
                                 <span class="mr-1">{{ status.name }}</span>
                                 <span class="badge badge-pill" :class="`badge-${status.color}`">{{ status.count }}</span>
                             </button>
-
-                            <!-- <button @click="getAppointments(appointmentStatus.confirmed)" type="button" class="btn btn-default">
-                                <span class="mr-1">Confirmed</span>
-                                <span class="badge badge-pill badge-success">0</span>
-                            </button>
-
-                            <button @click="getAppointments(appointmentStatus.cancelled)" type="button" class="btn btn-default">
-                                <span class="mr-1">Cancelled</span>
-                                <span class="badge badge-pill badge-danger">0</span>
-                            </button> -->
                         </div>
                     </div>
                     <div class="card">
