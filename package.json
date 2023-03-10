@@ -14,6 +14,7 @@
     "dependencies": {
         "@vitejs/plugin-vue": "^2.3.3",
         "admin-lte": "^3.2.0",
+        "flatpickr": "^4.6.13",
         "jquery": "^3.6.0",
         "laravel-vue-pagination": "^4.0.0",
         "moment": "^2.29.4",
