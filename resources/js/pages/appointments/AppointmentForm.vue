@@ -1,13 +1,14 @@
 <script setup>
 import axios from 'axios';
 import { reactive, onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useToastr } from '@/toastr';
 import { Form } from 'vee-validate';
 import flatpickr from "flatpickr";
 import 'flatpickr/dist/themes/light.css';
 
 const router = useRouter();
+const route = useRoute();
 const toastr = useToastr();
 const form = reactive({
     title: '',
@@ -18,10 +19,29 @@ const form = reactive({
 });
 
 const handleSubmit = (values, actions) => {
+    if (editMode.value) {
+        editAppointment(values, actions);
+    } else {
+        createAppointment(values, actions);
+    }
+};
+
+const createAppointment = (values, actions) => {
     axios.post('/api/appointments/create', form)
     .then((response) => {
         router.push('/admin/appointments');
         toastr.success('Appointment created successfully!');
+    })
+    .catch((error) => {
+        actions.setErrors(error.response.data.errors);
+    })
+};
+
+const editAppointment = (values, actions) => {
+    axios.put(`/api/appointments/${route.params.id}/edit`, form)
+    .then((response) => {
+        router.push('/admin/appointments');
+        toastr.success('Appointment updated successfully!');
     })
     .catch((error) => {
         actions.setErrors(error.response.data.errors);
@@ -36,7 +56,25 @@ const getClients = () => {
     })
 };
 
+const getAppointment = () => {
+    axios.get(`/api/appointments/${route.params.id}/edit`)
+    .then(({data}) => {
+        form.title = data.title;
+        form.client_id = data.client_id;
+        form.start_time = data.formatted_start_time;
+        form.end_time = data.formatted_end_time;
+        form.description = data.description;
+    })
+};
+
+const editMode = ref(false);
+
 onMounted(() => {
+    if (route.name === 'admin.appointments.edit') {
+        editMode.value = true;
+        getAppointment();
+    }
+
     flatpickr(".flatpickr", {
         enableTime: true,
         dateFormat: "Y-m-d h:i K",
@@ -51,7 +89,10 @@ onMounted(() => {
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Create Appointment</h1>
+                    <h1 class="m-0">
+                        <span v-if="editMode">Edit</span>
+                        <span v-else>Create</span>
+                        Appointment</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -61,7 +102,10 @@ onMounted(() => {
                         <li class="breadcrumb-item">
                             <router-link to="/admin/appointments">Appointments</router-link>
                         </li>
-                        <li class="breadcrumb-item active">Create</li>
+                        <li class="breadcrumb-item active">
+                            <span v-if="editMode">Edit</span>
+                            <span v-else>Create</span>
+                        </li>
                     </ol>
                 </div>
             </div>
