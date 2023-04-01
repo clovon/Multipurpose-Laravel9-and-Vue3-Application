@@ -41,4 +41,6 @@ Route::get('/api/appointments', [AppointmentController::class, 'index']);
 Route::post('/api/appointments/create', [AppointmentController::class, 'store']);
 Route::get('/api/appointments/{appointment}/edit', [AppointmentController::class, 'edit']);
 Route::put('/api/appointments/{appointment}/edit', [AppointmentController::class, 'update']);
+Route::delete('/api/appointments/{appointment}', [AppointmentController::class, 'destroy']);
+
 Route::get('{view}', ApplicationController::class)->where('view', '(.*)');
