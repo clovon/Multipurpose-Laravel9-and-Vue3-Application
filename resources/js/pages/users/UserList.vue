@@ -15,12 +15,16 @@ const formValues = ref();
 const form = ref(null);
 
 const getUsers = (page = 1) => {
-    axios.get(`/api/users?page=${page}`)
-        .then((response) => {
-            users.value = response.data;
-            selectedUsers.value = [];
-            selectAll.value = false;
-        })
+    axios.get(`/api/users?page=${page}`, {
+        params: {
+            query: searchQuery.value
+        }
+    })
+    .then((response) => {
+        users.value = response.data;
+        selectedUsers.value = [];
+        selectAll.value = false;
+    })
 }
 
 const createUserSchema = yup.object({
@@ -92,20 +96,6 @@ const handleSubmit = (values, actions) => {
 
 const searchQuery = ref(null);
 
-const search = () => {
-    axios.get('/api/users/search', {
-        params: {
-            query: searchQuery.value
-        }
-    })
-        .then(response => {
-            users.value = response.data;
-        })
-        .catch(error => {
-            console.log(error);
-        })
-};
-
 const selectedUsers = ref([]);
 const toggleSelection = (user) => {
     const index = selectedUsers.value.indexOf(user.id);
@@ -157,7 +147,7 @@ const selectAllUsers = () => {
 }
 
 watch(searchQuery, debounce(() => {
-    search();
+    getUsers();
 }, 300));
 
 onMounted(() => {
