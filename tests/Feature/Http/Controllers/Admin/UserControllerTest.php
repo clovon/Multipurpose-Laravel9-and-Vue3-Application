@@ -2,10 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers\Admin;
 
-use Tests\TestCase;
-use App\Models\User;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class UserControllerTest extends TestCase
 {
@@ -19,6 +17,7 @@ class UserControllerTest extends TestCase
 
         $this->assertDatabaseCount('users', 0);
     }
+
     /**
      * A basic feature test example.
      *

@@ -10,7 +10,7 @@ enum AppointmentStatus: int
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             AppointmentStatus::SCHEDULED => 'primary',
             AppointmentStatus::CONFIRMED => 'success',
             AppointmentStatus::CANCELLED => 'danger',
