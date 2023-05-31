@@ -1,64 +1,64 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Multipurpose Laravel and Vue 3 Application
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a part of YouTube tutorial series on building application using Laravel and Vue 3.
+Here is the YouTube playlist link: https://www.youtube.com/watch?v=IoPOi-Xp_Ng&list=PLGg3vnFos8GN3MAvxbI-QXKSkBKi2yIFO
+## Topics Covered
 
-## About Laravel
+* How to filter results using Laravel and Vue 3
+* How to add search functionality with Laravel and Vue 3
+* How to use SweetAlert with Laravel and Vue 3
+* How to install AdminLTE 3 with Laravel
+* How to use toast notification using Laravel and Vue 3
+* How to use bootstrap confirmation modal using Laravel and Vue 3
+* How to use bootstrap modal for editing data using Laravel and Vue 3
+* How to use date picker, time picker & text-area input with laravel and Vue 3
+* How to use Vue 3 components for re-usability
+* How to use Laravel fortify for authentication
+* How to use Vue 3 events
+* How to use toast notification with Laravel and Vue 3
+* How to use bootstrap modal for deleting data using Laravel and Vue 3
+* How to display alert window before deleting data using Laravel and Vue 3
+* How to use pagination in Laravel and Vue 3
+* How to use bootstrap for pagination in Laravel and Vue 3
+* How to use flatpickr datepicker using Laravel and Vue 3
+* How to use flatpickr timepicker using Laravel and Vue 3
+* How to use datepicker and timepicker with Laravel and Vue 3
+* How to perform bulk delete using Laravel and Vue 3
+* How to use vue-router using Laravel and Vue 3
+* How to use axios using Laravel and Vue 3
+* How to use vee-validate for frontend validation using Vue 3
+* How to use moment js for formatting date using Vue 3
+* How to use laravel-vue-pagination library with Vue 3 and Laravel
+* How to use Laravel Macros
+* And more...
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Clone the repository
+- Copy .env.example to .env
+- Set the DB_ environment variables in .env file
+- Create a database with the name specified in DB_DATABASE
+- ```composer install```
+- ```npm install```
+- ```php artisan key:generate```
+- Migrate and seed the database with ```php artisan migrate:fresh --seed```
+- Run the application:
+- ```php artisan serve```
+- ```npm run dev```
+- You can now log in with user "john@example.com", password "password"
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Authors
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- [@clovon](https://www.github.com/clovon)
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Feedback
 
-### Premium Partners
+If you have any feedback, please reach out to me at channel.clovon@gmail.com
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[MIT](https://choosealicense.com/licenses/mit/)
