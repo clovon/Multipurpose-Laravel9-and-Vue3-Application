@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AppointmentController;
 use App\Http\Controllers\Admin\AppointmentStatusController;
 use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\DashboardStatController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ApplicationController;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,8 @@ Route::get('/', function () {
 // });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/api/stats/appointments', [DashboardStatController::class, 'appointments']);
+
     Route::get('/api/users', [UserController::class, 'index']);
     Route::post('/api/users', [UserController::class, 'store']);
     Route::patch('/api/users/{user}/change-role', [UserController::class, 'changeRole']);
