@@ -29,6 +29,7 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/api/stats/appointments', [DashboardStatController::class, 'appointments']);
+    Route::get('/api/stats/users', [DashboardStatController::class, 'users']);
 
     Route::get('/api/users', [UserController::class, 'index']);
     Route::post('/api/users', [UserController::class, 'store']);
