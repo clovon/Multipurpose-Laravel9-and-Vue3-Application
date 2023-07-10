@@ -15,7 +15,11 @@ class SettingController extends Controller
 
     public function update()
     {
-        $settings = request()->all();
+        $settings = request()->validate([
+            'app_name' => ['required', 'string'],
+            'date_format' => ['required', 'string'],
+            'pagination_limit' => ['required', 'int', 'min:1', 'max:100'],
+        ]);
 
         foreach ($settings as $key => $value) {
             Setting::where('key', $key)->update(['value' => $value]);
