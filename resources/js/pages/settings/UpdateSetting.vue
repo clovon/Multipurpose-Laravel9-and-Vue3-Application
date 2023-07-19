@@ -69,11 +69,11 @@ onMounted(() => {
                                 <div class="form-group">
                                     <label for="dateFormat">Date Format</label>
                                     <select v-model="settings.date_format" class="form-control">
-                                        <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                                        <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                                        <option value="Month DD, YYYY">Month DD, YYYY</option>
-                                        <option value="DD Month YYYY">DD Month YYYY</option>
+                                        <option value="m/d/Y">MM/DD/YYYY</option>
+                                        <option value="d/m/Y">DD/MM/YYYY</option>
+                                        <option value="Y-m-d">YYYY-MM-DD</option>
+                                        <option value="F j, Y">Month DD, YYYY</option>
+                                        <option value="j F Y">DD Month YYYY</option>
                                     </select>
                                     <span class="text-danger text-sm" v-if="errors && errors.date_format">{{ errors.date_format[0] }}</span>
                                 </div>
