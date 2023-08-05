@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\Admin\AppointmentController;
-use App\Http\Controllers\Admin\AppointmentStatusController;
-use App\Http\Controllers\Admin\ClientController;
-use App\Http\Controllers\Admin\DashboardStatController;
-use App\Http\Controllers\Admin\SettingController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ApplicationController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\AppointmentController;
+use App\Http\Controllers\Admin\DashboardStatController;
+use App\Http\Controllers\Admin\AppointmentStatusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/api/settings', [SettingController::class, 'index']);
     Route::post('/api/settings', [SettingController::class, 'update']);
+
+    Route::get('/api/profile', [ProfileController::class, 'index']);
+    Route::put('/api/profile', [ProfileController::class, 'update']);
 });
 
 Route::get('{view}', ApplicationController::class)->where('view', '(.*)')->middleware('auth');
