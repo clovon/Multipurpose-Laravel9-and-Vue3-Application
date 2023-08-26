@@ -1,25 +1,18 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue';
 import { useToastr } from '@/toastr';
+import { useAuthUserStore } from '../../stores/AuthUserStore';
 
+const authUserStore = useAuthUserStore();
 const toastr = useToastr();
-
-const form = ref({
-    name: '',
-    email: '',
-    role: '',
-});
-
-const getUser = () => {
-    axios.get('/api/profile')
-    .then((response) => {
-        form.value = response.data;
-    });
-};
 
 const errors = ref([]);
 const updateProfile = () => {
-    axios.put('/api/profile', form.value)
+    axios.put('/api/profile', {
+        name: authUserStore.user.name,
+        email: authUserStore.user.email,
+        role: authUserStore.user.role,
+    })
     .then((response) => {
         toastr.success('Profile updated successfully!');
     })
@@ -72,10 +65,6 @@ const handleFileChange = (event) => {
         toastr.success('Image uploaded successfully!');
     });
 };
-
-onMounted(() => {
-    getUser();
-});
 </script>
 <template>
     <div class="content-header">
@@ -103,12 +92,12 @@ onMounted(() => {
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <input @change="handleFileChange" ref="fileInput" type="file" class="d-none">
-                                <img @click="openFileInput" class="profile-user-img img-circle" :src="profilePictureUrl ? profilePictureUrl : form.avatar" alt="User profile picture">
+                                <img @click="openFileInput" class="profile-user-img img-circle" :src="profilePictureUrl ? profilePictureUrl : authUserStore.user.avatar" alt="User profile picture">
                             </div>
 
-                            <h3 class="profile-username text-center">{{ form.name }}</h3>
+                            <h3 class="profile-username text-center">{{ authUserStore.user.name }}</h3>
 
-                            <p class="text-muted text-center">{{ form.role }}</p>
+                            <p class="text-muted text-center">{{ authUserStore.user.role }}</p>
                         </div>
                     </div>
                 </div>
@@ -131,14 +120,14 @@ onMounted(() => {
                                         <div class="form-group row">
                                             <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                                             <div class="col-sm-10">
-                                                <input v-model="form.name" type="text" class="form-control" id="inputName" placeholder="Name">
+                                                <input v-model="authUserStore.user.name" type="text" class="form-control" id="inputName" placeholder="Name">
                                                 <span class="text-danger text-sm" v-if="errors && errors.name">{{ errors.name[0] }}</span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                                             <div class="col-sm-10">
-                                                <input v-model="form.email" type="email" class="form-control " id="inputEmail"
+                                                <input v-model="authUserStore.user.email" type="email" class="form-control " id="inputEmail"
                                                     placeholder="Email">
                                                 <span class="text-danger text-sm" v-if="errors && errors.email">{{ errors.email[0] }}</span>
                                             </div>

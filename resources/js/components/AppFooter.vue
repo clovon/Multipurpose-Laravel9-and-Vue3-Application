@@ -1,4 +1,7 @@
 <script setup>
+import { useAuthUserStore } from '../stores/AuthUserStore';
+const authUserStore = useAuthUserStore();
+
 defineProps({
     settings: Object,
 });
@@ -8,7 +11,7 @@ defineProps({
     <footer class="main-footer">
 
         <div class="float-right d-none d-sm-inline">
-            Anything you want
+            {{ authUserStore.user.name }}
         </div>
 
         <strong>Copyright &copy; 2023 <a href="#">{{ settings?.app_name }}</a>.</strong> All rights

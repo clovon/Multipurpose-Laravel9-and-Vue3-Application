@@ -18,6 +18,7 @@
         "jquery": "^3.6.0",
         "laravel-vue-pagination": "^4.0.0",
         "moment": "^2.29.4",
+        "pinia": "^2.1.6",
         "sweetalert2": "^11.7.3",
         "vee-validate": "^4.6.5",
         "vue": "^3.2.37",
