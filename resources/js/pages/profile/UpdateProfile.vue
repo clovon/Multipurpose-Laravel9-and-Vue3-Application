@@ -51,11 +51,9 @@ const openFileInput = () => {
     fileInput.value.click();
 };
 
-const profilePictureUrl = ref(null);
-
 const handleFileChange = (event) => {
     const file = event.target.files[0];
-    profilePictureUrl.value = URL.createObjectURL(file);
+    authUserStore.user.avatar = URL.createObjectURL(file);
 
     const formData = new FormData();
     formData.append('profile_picture', file);
@@ -92,7 +90,7 @@ const handleFileChange = (event) => {
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <input @change="handleFileChange" ref="fileInput" type="file" class="d-none">
-                                <img @click="openFileInput" class="profile-user-img img-circle" :src="profilePictureUrl ? profilePictureUrl : authUserStore.user.avatar" alt="User profile picture">
+                                <img @click="openFileInput" class="profile-user-img img-circle" :src="authUserStore.user.avatar" alt="User profile picture">
                             </div>
 
                             <h3 class="profile-username text-center">{{ authUserStore.user.name }}</h3>
