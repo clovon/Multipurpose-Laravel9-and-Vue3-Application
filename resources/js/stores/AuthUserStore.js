@@ -4,7 +4,7 @@ import { ref } from 'vue';
 
 export const useAuthUserStore = defineStore('AuthUserStore', () => {
     const user = ref({
-        name: 'John',
+        name: '',
         email: '',
         role: '',
         avatar: '',

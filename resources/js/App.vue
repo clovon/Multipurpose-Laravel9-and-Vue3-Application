@@ -7,38 +7,19 @@ import AppFooter from './components/AppFooter.vue';
 import { useAuthUserStore } from './stores/AuthUserStore';
 
 const authUserStore = useAuthUserStore();
-authUserStore.getAuthUser();
-
-const settings = ref(null);
-const fetchSettings = () => {
-    axios.get('/api/settings')
-    .then((response) => {
-        settings.value = response.data;
-    });
-};
-
-const user = ref(null);
-const fetchAuthUser = () => {
-    axios.get('/api/profile')
-    .then((response) => {
-        user.value = response.data;
-    });
-};
-
-onMounted(() => {
-    fetchSettings();
-    fetchAuthUser();
-});
 </script>
 
 <template>
-    <div class="wrapper" id="app">
+    <div v-if="authUserStore.user.name !== ''" class="wrapper" id="app">
         <AppNavbar />
-        <SidebarLeft :user="user" :settings="settings" />
+        <SidebarLeft/>
         <div class="content-wrapper">
             <router-view></router-view>
         </div>
         <SidebarRight />
-        <AppFooter :settings="settings" />
+        <AppFooter />
+</div>
+<div v-else class="login-page">
+    <router-view></router-view>
 </div>
 </template>
