@@ -19,12 +19,14 @@ const router = createRouter({
     history: createWebHistory(),
 });
 
-router.beforeEach((to, from) => {
+router.beforeEach(async (to, from) => {
     const authUserStore = useAuthUserStore();
     if (authUserStore.user.name === '' && to.name !== 'admin.login') {
-        authUserStore.getAuthUser();
         const settingStore = useSettingStore();
-        settingStore.getSetting();
+        await Promise.all([
+            authUserStore.getAuthUser(),
+            settingStore.getSetting(),
+        ]);
     }
 });
 

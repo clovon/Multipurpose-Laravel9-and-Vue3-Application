@@ -14,8 +14,8 @@ export const useSettingStore = defineStore('SettingStore', () => {
         theme.value = theme.value === 'light' ? 'dark' : 'light';
     };
 
-    const getSetting = () => {
-        axios.get('/api/settings')
+    const getSetting = async () => {
+        await axios.get('/api/settings')
             .then((response) => {
                 setting.value = response.data;
             });
