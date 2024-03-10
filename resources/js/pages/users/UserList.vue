@@ -7,6 +7,7 @@ import { useToastr } from '../../toastr.js';
 import UserListItem from './UserListItem.vue';
 import { debounce } from 'lodash';
 import { Bootstrap4Pagination } from 'laravel-vue-pagination';
+import Preloader from '../../components/Preloader.vue';
 
 const toastr = useToastr();
 const users = ref({'data': []});
@@ -14,7 +15,9 @@ const editing = ref(false);
 const formValues = ref();
 const form = ref(null);
 
+const loading = ref(false);
 const getUsers = (page = 1) => {
+    loading.value = true;
     axios.get(`/api/users?page=${page}`, {
         params: {
             query: searchQuery.value
@@ -24,6 +27,7 @@ const getUsers = (page = 1) => {
         users.value = response.data;
         selectedUsers.value = [];
         selectAll.value = false;
+        loading.value = false;
     })
 }
 
@@ -298,4 +302,6 @@ onMounted(() => {
             </div>
         </div>
     </div>
+
+    <Preloader :loading="loading" />
 </template>

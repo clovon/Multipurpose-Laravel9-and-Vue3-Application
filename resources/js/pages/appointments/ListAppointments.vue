@@ -2,6 +2,7 @@
 import { onMounted, ref, computed } from 'vue';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import Preloader from '../../components/Preloader.vue';
 
 const selectedStatus = ref();
 const appointmentStatus = ref([]);
@@ -12,7 +13,9 @@ const getAppointmentStatus = () => {
         })
 };
 const appointments = ref([]);
+const loading = ref(false);
 const getAppointments = (status) => {
+    loading.value = true;
     selectedStatus.value = status;
     const params = {};
     if (status) {
@@ -23,6 +26,7 @@ const getAppointments = (status) => {
     })
         .then((response) => {
             appointments.value = response.data;
+            loading.value = false;
         })
 };
 
@@ -102,10 +106,12 @@ onMounted(() => {
                                 <span class="badge badge-pill badge-info">{{ appointmentsCount }}</span>
                             </button>
 
-                            <button v-for="status in appointmentStatus" @click="getAppointments(status.value)" type="button"
-                                class="btn" :class="[selectedStatus === status.value ? 'btn-secondary' : 'btn-default']">
+                            <button v-for="status in appointmentStatus" @click="getAppointments(status.value)"
+                                type="button" class="btn"
+                                :class="[selectedStatus === status.value ? 'btn-secondary' : 'btn-default']">
                                 <span class="mr-1">{{ status.name }}</span>
-                                <span class="badge badge-pill" :class="`badge-${status.color}`">{{ status.count }}</span>
+                                <span class="badge badge-pill" :class="`badge-${status.color}`">{{ status.count
+                                    }}</span>
                             </button>
                         </div>
                     </div>
@@ -130,7 +136,7 @@ onMounted(() => {
                                         <td>{{ appointment.end_time }}</td>
                                         <td>
                                             <span class="badge" :class="`badge-${appointment.status.color}`">{{
-                                                appointment.status.name }}</span>
+                                    appointment.status.name }}</span>
                                         </td>
                                         <td>
                                             <router-link :to="`/admin/appointments/${appointment.id}/edit`">
@@ -149,4 +155,8 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-    </div></template>
+    </div>
+
+    <Preloader :loading="loading" />
+
+</template>
